@@ -1,0 +1,28 @@
+# Ignore virtual environments
+venv/
+env/
+ENV/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*.so
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Mac & Windows system files
+.DS_Store
+Thumbs.db
+
+# Environment/config files
+*.env
+
+# Model files (optional - only if not needed publicly)
+*.pkl
+
+# Logs
+*.log

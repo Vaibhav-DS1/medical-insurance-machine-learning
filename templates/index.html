@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Insurance Predictor</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      margin-top: 50px;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    #result {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: green;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #888;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Medical Insurance Cost Predictor 💡</h2>
+
+    <form id="predictForm">
+      <input type="number" name="age" placeholder="Enter your age" required>
+      
+      <select name="sex" required>
+        <option value="">Select Sex</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+
+      <input type="number" name="bmi" placeholder="Enter your BMI" step="0.1" required>
+      <input type="number" name="children" placeholder="Number of Children" required>
+
+      <select name="smoker" required>
+        <option value="">Are you a smoker?</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+
+      <select name="region" required>
+        <option value="">Region</option>
+        <option value="northeast">Northeast</option>
+        <option value="northwest">Northwest</option>
+        <option value="southeast">Southeast</option>
+        <option value="southwest">Southwest</option>
+      </select>
+
+      <button type="submit">Predict Cost</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <div class="footer">
+  &copy; 2025 Medical Insurance Predictor App by &nbsp;|&nbsp;
+  <a href="https://github.com/Vaibhav-DS1/medical-insurance-predictor" target="_blank">
+    GitHub Repo
+  </a>
+</div>
+
+  <script>
+    const form = document.getElementById("predictForm");
+    const resultElement = document.getElementById("result");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      resultElement.innerText = "⏳ Predicting...";
+
+      try {
+        const response = await fetch("/predict_charges", {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.Result) {
+          resultElement.innerText = result.Result;
+        } else if (result.Error) {
+          resultElement.innerText = "❌ Error: " + result.Error;
+        } else {
+          resultElement.innerText = "Unexpected server response.";
+        }
+
+      } catch (error) {
+        resultElement.innerText = "❌ Server not responding.";
+      }
+    });
+  </script>
+
+</body>
+</html>
