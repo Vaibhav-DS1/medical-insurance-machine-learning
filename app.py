@@ -30,6 +30,5 @@ def get_insurance_charges():
 
     return jsonify({'Result':f"Predicted Medical Insurance Charges are: {charges}"})
 
-app.run(port = config.PORT_NUMBER,debug = 'False')
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
